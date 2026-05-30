@@ -1,0 +1,26 @@
+data:
+  cache_dir: "data/raw/fastf1_cache"
+  processed_dir: "data/processed"
+  features_dir: "data/features"
+
+session:
+  year: 2023
+  race: "Bahrain"          # starting with one race for milestone 1
+  session_type: "R"        # R = Race, Q = Qualifying
+
+drivers:
+  - "VER"                  # Verstappen
+  - "HAM"                  # Hamilton
+  - "ALO"                  # Alonso
+
+telemetry_channels:
+  - "Brake"
+  - "Throttle"
+  - "Speed"
+  - "nGear"
+  - "RPM"
+  - "SessionTime"
+
+model:
+  embedding_dim: 32
+  random_seed: 42
