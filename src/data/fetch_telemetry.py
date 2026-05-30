@@ -61,6 +61,8 @@ def get_driver_telemetry(
             # Keep only the channels we care about
             available = [c for c in channels if c in tel.columns]
             tel = tel[available].copy()
+            if 'Brake' in tel.columns:
+                tel['Brake'] = tel['Brake'].astype(int)
 
             # Tag each row with metadata
             tel["LapNumber"] = lap["LapNumber"]
