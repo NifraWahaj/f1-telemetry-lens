@@ -5,13 +5,11 @@ __pycache__/
 *.pyo
 .env
 
-# Data — too large for git
+# Raw & processed telemetry — too large for git (~200MB)
+# Regenerate with: python src/data/fetch_telemetry.py
 data/raw/
 data/processed/
-data/features/
 
-# Model weights — use DVC or just document how to reproduce
-outputs/models/
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
