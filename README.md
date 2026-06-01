@@ -202,7 +202,7 @@ f1-driver-fingerprinting/
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/NifraWahaj/f1-driver-fingerprinting
+git clone https://github.com/NifraWahaj/f1-telemetry-lens
 cd f1-driver-fingerprinting
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
