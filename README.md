@@ -1,4 +1,4 @@
-# F1 Driver Style Fingerprinting
+# F1 Telemetry Lens
 ### Learning driver identity from raw telemetry using 1D-CNN embeddings and XGBoost
 
 > *Can a machine learn to recognise a Formula 1 driver's identity purely from how they use the throttle, brake, and steering — without knowing anything about the circuit or the car?*
@@ -269,7 +269,7 @@ No paid API keys required.
 
 ---
 
-## Design Decisions & Honest Limitations
+## Design Decisions & Limitations
 
 **Why two models?** XGBoost on hand-crafted features answers "do interpretable style signals exist?" The CNN answers "can the model learn a fingerprint without being told what to look for?" Both questions are worth answering separately and the two results reinforce each other.
 
