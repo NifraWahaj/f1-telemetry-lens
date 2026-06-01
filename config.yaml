@@ -12,7 +12,9 @@ drivers:
   - "VER"                  # Verstappen
   - "HAM"                  # Hamilton
   - "ALO"                  # Alonso
-
+  - "LEC"                  # Leclerc
+  - "SAI"                  # Sainz
+  - "NOR"                  # Norris
 telemetry_channels:
   - "Brake"
   - "Throttle"
