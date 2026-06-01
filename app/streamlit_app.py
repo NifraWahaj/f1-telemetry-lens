@@ -402,7 +402,7 @@ all_drivers = config["drivers"]
 with st.sidebar:
     st.markdown("""
     <div style='font-family:Barlow Condensed;font-size:1.3rem;font-weight:800;
-    color:#fff;letter-spacing:-0.01em;margin-bottom:2px;'>🏎 F1 Telemetry Lens</div>
+    color:#fff;letter-spacing:-0.01em;margin-bottom:2px;'>F1 Telemetry Lens</div>
     <div style='font-family:Barlow Condensed;font-size:0.6rem;letter-spacing:0.16em;
     text-transform:uppercase;color:#e10600;margin-bottom:1.5rem;'>Driver Style Fingerprinting</div>
     """, unsafe_allow_html=True)
