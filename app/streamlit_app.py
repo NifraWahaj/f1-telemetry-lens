@@ -1,7 +1,7 @@
 """
 streamlit_app.py
 ----------------
-PitLane Prints — Driver Style Fingerprinting Dashboard
+F1 Telemetry Lens — Driver Style Fingerprinting Dashboard
 
 Displays:
 1. Driver telemetry fingerprint (radar chart of engineered features)
@@ -33,7 +33,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 # Page config — must be first Streamlit call
 # ─────────────────────────────────────────────
 st.set_page_config(
-    page_title="PitLane Prints",
+    page_title="F1 Telemetry Lens",
     page_icon="🏎️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -139,9 +139,21 @@ html, body, [class*="css"] {
     margin: 0.5rem 0;
 }
 
-/* Hide streamlit branding */
+/* Hide streamlit branding + remove top padding */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
+header {visibility: hidden;}
+.block-container {
+    padding-top: 1.5rem !important;
+}
+
+/* Driver badge colors — all 6 */
+.driver-ver { color: #3b82f6; border-color: #3b82f6; }
+.driver-ham { color: #a78bfa; border-color: #a78bfa; }
+.driver-alo { color: #f87171; border-color: #f87171; }
+.driver-lec { color: #f97316; border-color: #f97316; }
+.driver-sai { color: #facc15; border-color: #facc15; }
+.driver-nor { color: #34d399; border-color: #34d399; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -396,7 +408,7 @@ except Exception as e:
 with st.sidebar:
     st.markdown("""
     <div style='font-family: Barlow Condensed; font-size: 1.5rem; font-weight: 800; 
-    color: white; letter-spacing: -0.01em;'>🏎 PitLane Prints</div>
+    color: white; letter-spacing: -0.01em;'>🏎 F1 Telemetry Lens</div>
     <div style='font-family: Barlow Condensed; font-size: 0.65rem; letter-spacing: 0.15em; 
     text-transform: uppercase; color: #e10600; margin-bottom: 1.5rem;'>
     Driver Style Fingerprinting</div>
@@ -450,7 +462,7 @@ with st.sidebar:
 # Main content
 # ─────────────────────────────────────────────
 st.markdown("""
-<div class='pit-header'>PITLANE PRINTS</div>
+<div class='pit-header'>F1 Telemetry Lens</div>
 <div class='pit-sub'>F1 Driver Style Fingerprinting · 2023 Bahrain GP</div>
 """, unsafe_allow_html=True)
 
@@ -512,6 +524,7 @@ with col_umap:
     st.markdown("<div class='section-title'>Embedding Space — UMAP</div>",
                 unsafe_allow_html=True)
     highlight = None if umap_highlight == "All" else umap_highlight
+    # UMAP always shows all drivers from the CSV — sidebar selection only affects radar
     st.plotly_chart(make_umap(umap_df, highlight=highlight),
                     use_container_width=True)
     st.markdown("""<div class='insight-box'>
@@ -601,6 +614,18 @@ if fig_telem:
 else:
     st.warning(f"No telemetry for {telem_driver} lap {telem_lap}")
 
+st.markdown(f"""<div class='insight-box'>
+<b>How to read:</b> Four channels recorded at ~15Hz throughout the lap. 
+<b>Throttle</b> (0–100%) — how hard the driver is on the accelerator pedal; 
+square sharp drops = aggressive lift-off, gradual ramps = smooth style. 
+<b>Brake</b> (0/1) — binary press/release; count the spikes to see braking zones per lap. 
+<b>Speed</b> (km/h) — the valleys are corners, peaks are straights; 
+a higher valley = more corner speed carried. 
+<b>nGear</b> — gear number; frequent up/down shifts show aggressive mechanical input. 
+Try comparing the same lap number across different drivers using the sidebar — 
+the stylistic differences are visible to the naked eye.
+</div>""", unsafe_allow_html=True)
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ── Row 4: Feature importance + training curve ──
@@ -611,12 +636,27 @@ with col_fi:
                 unsafe_allow_html=True)
     st.plotly_chart(make_feature_importance_bar(fi_df.sort_values("importance")),
                     use_container_width=True)
+    st.markdown("""<div class='insight-box'>
+    <b>How to read:</b> Each bar shows how much that feature contributed to the 
+    XGBoost classifier's decisions across all splits. Longer bar = the model 
+    relied on it more. Features below the uniform baseline (0.111) contribute 
+    less than average — not useless, but less decisive. <br><br>
+    <b>What it means:</b> <b>mean_corner_speed</b> dominates because Verstappen's 
+    car advantage creates a ~9 km/h gap in corners that no other feature can 
+    explain. <b>gear_change_freq</b> and <b>coasting_ratio</b> are the next 
+    most driver-specific — these reflect genuine style choices independent of car.
+    </div>""", unsafe_allow_html=True)
 
 with col_train:
     st.markdown("<div class='section-title'>CNN Training Curve</div>",
                 unsafe_allow_html=True)
     st.plotly_chart(make_training_curve(history_df), use_container_width=True)
     st.markdown("""<div class='insight-box'>
-    Val accuracy reached 100% at epoch 16. Early stopping triggered at epoch 31.
-    The fast convergence reflects strong style separation in raw telemetry sequences.
+    <b>How to read:</b> Blue = training accuracy, red dashed = validation accuracy 
+    (on laps the model never saw). Both should rise and stay close together — 
+    a large gap would mean overfitting. <br><br>
+    <b>Why 100%?</b> The driving styles are genuinely separable in raw telemetry 
+    for this race — the CNN only needed 16 epochs to learn a perfect decision boundary 
+    on the validation set. The XGBoost 5-fold OOF score of 93.7% is the more 
+    conservative and trustworthy number for generalization claims.
     </div>""", unsafe_allow_html=True)
