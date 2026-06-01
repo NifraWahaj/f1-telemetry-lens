@@ -8,7 +8,6 @@ __pycache__/
 # Raw & processed telemetry — too large for git (~200MB)
 # Regenerate with: python src/data/fetch_telemetry.py
 data/raw/
-data/processed/
 
 
 # Jupyter checkpoints
