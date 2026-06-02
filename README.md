@@ -23,7 +23,31 @@ The project has two modelling stages:
 The result is a live Streamlit dashboard where you can explore driver style profiles, inspect raw telemetry, and test the model blind — pick a random lap and see if the classifier identifies the driver.
 
 ---
+## Dashboard
 
+### Overview Dashboard
+Driver style fingerprints, learned embedding space (UMAP), and key model metrics.
+
+![Dashboard Overview](outputs/figures/screenshot_dashboard_01.png)
+
+### Blind Identification Challenge
+Select a random lap and see whether the model can correctly identify the driver from telemetry-derived features alone.
+
+![Blind Identification](outputs/figures/screenshot_dashboard_02.png)
+
+### Raw Telemetry Explorer
+Inspect throttle, brake, speed, and gear traces for any driver and lap.
+
+![Telemetry Explorer](outputs/figures/screenshot_dashboard_03.png)
+
+### Model Analysis
+Feature importance rankings and CNN training performance.
+
+![Model Analysis](outputs/figures/screenshot_dashboard_04.png)
+
+---
+Live Demo: [https://f1-telemetry-lens.streamlit.app/](https://f1-telemetry-lens.streamlit.app/)
+---
 ## Results
 
 ### XGBoost Classifier — 93.7% OOF Accuracy
