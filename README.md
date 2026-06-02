@@ -9,6 +9,7 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.35-34d399?style=flat-square)
 ![FastF1](https://img.shields.io/badge/FastF1-3.4-a78bfa?style=flat-square)
 
+###### Live Demo: [https://f1-telemetry-lens.streamlit.app/](https://f1-telemetry-lens.streamlit.app/)
 ---
 
 ## Overview
@@ -45,8 +46,6 @@ Feature importance rankings and CNN training performance.
 
 ![Model Analysis](outputs/figures/screenshot_dashboard_04.png)
 
----
-Live Demo: [https://f1-telemetry-lens.streamlit.app/](https://f1-telemetry-lens.streamlit.app/)
 ---
 ## Results
 
